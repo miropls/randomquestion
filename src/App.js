@@ -1,23 +1,20 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [question, setQuestion] = useState(null);
+
+  const getQuestion = async () => {
+    const getData = await fetch("https://opentdb.com/api.php?amount=1")
+    const data = await getData.json()
+    await setQuestion(data.results[0].question)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Press the button to get a random question!</h1>
+      <p>{question}</p>
+      <button onClick={getQuestion}>Get a question</button>
     </div>
   );
 }
